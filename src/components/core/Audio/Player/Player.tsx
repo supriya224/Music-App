@@ -90,40 +90,38 @@ function Player({
   }, []);
 
   return (
-    <div className="grid p-20 h-fit mt-9 mx-auto justify-center items-center bg-cyan-300 sm:bg-red-900 md:bg-pink-700 lg:grid-cols-2 lg:bg-orange-400 lg:mx-auto xl:bg-blue-900 ">
-      <div className="bg-white p-12 rounded-lg shadow-md w-96">
+    <div className="container mx-auto p-20 h-fit mt-9 ">
+      <div className="bg-white p-12 rounded-lg  bg-gradient-to-t from-indigo-500 to-orange-300 shadow-lg shadow-black ">
         <img
           src="./assets/images/bg.jpeg"
           alt="idk - Highvyn, Taylor Shin"
-          className="w-64 h-64 mx-auto rounded-lg mb-4 shadow-lg shadow-teal-50"
+          className="w-64 h-64 mx-auto rounded-lg mb-4 shadow-lg shadow-black"
         />
-        <h2 className="text-xl font-semibold text-center">idk</h2>
-        <p className="text-gray-600 text-sm text-center">
-          Highvyn, Taylor Shin
-        </p>
+        <h2 className="text-xl font-semibold text-center">song name</h2>
+        <p className="text-white text-sm text-center">song</p>
         <audio ref={audioRef} src={audioSrc} />
 
         <div className="mt-6 flex justify-center items-center">
           <IoPlaySkipBack
             size={36}
-            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 "
+            className="p-2.5  bg-gray-200 rounded-full hover:bg-gray-300 "
           />
           {isPlaying ? (
             <IoPause
               size={56}
-              className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 "
+              className="p-4 mx-2 bg-gray-200 rounded-full hover:bg-gray-300 "
               onClick={handlePlayPause}
             />
           ) : (
             <IoPlay
               size={56}
-              className="p-2 mx-4 bg-gray-200 rounded-full hover:bg-gray-300 "
+              className="p-4 mx-2 bg-gray-200 rounded-full hover:bg-gray-300 "
               onClick={handlePlayPause}
             />
           )}
           <IoPlaySkipForward
             size={36}
-            className="p-2 bg-gray-200 rounded-full hover:bg-gray-300 "
+            className="p-2.5 bg-gray-200 rounded-full hover:bg-gray-300 "
           />
         </div>
         <input
@@ -133,9 +131,9 @@ function Player({
           max={duration}
           value={currentTime}
           onChange={handleSeek}
-          className="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer range pr-6 accent-indigo-600"
+          className="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer range pr-6 accent-indigo-800"
         />
-        <div className="flex justify-between mt-2 text-sm text-gray-600">
+        <div className="flex justify-between mt-2 text-sm text-white">
           <span>{formatDuration(currentTime)}</span>
           <span>{formatDuration(duration)}</span>
         </div>

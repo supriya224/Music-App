@@ -87,7 +87,7 @@ function AudioPlayer({
   console.log(currentTime);
 
   return (
-    <div className="player-card">
+    <div className=" ">
       <img src="./assets/images/bg.jpeg" width={50} height={70} alt="img" />
       <input
         type="range"

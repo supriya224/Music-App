@@ -8,7 +8,7 @@ function App() {
   console.log('[Env]', CONSTANT.API_URL);
 
   return (
-    <div className="App">
+    <div className="container mx-auto">
       <BrowserRouter>
         <Header />
         <Routes>

@@ -96,36 +96,46 @@ function Home() {
     <MainLayout>
       {/* <SideBar /> */}
       <LeftSectionLayout>
-        <section className="w-1/2 ">
-          <div className="p-9 my-9 mx-9 bg-gray-100 border border-gray-200 shadow ">
-            <label
-              className="block mb-2 text-sm font-medium text-gray-900 cursor-pointer "
-              htmlFor="contained-button-file"
-            >
-              Upload your favourite audio files
-              <UploadCloud className="text-black cursor-pointer" />
-              <input
-                className="block w-full text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
-                type="file"
-                onChange={handleAudioFile}
-                style={{ display: 'none' }}
-                accept=".mp3,audio/*"
-                id="contained-button-file"
-              />
-            </label>
+        <section className="container mx-auto bg-gradient-to-r from-indigo-200 to-indigo-800 grid sm:grid-cols-1 md:cols-2 lg:grid-cols-2   ">
+          <div className=" text-lg ">
+            <div className="p-5 flex my-9 mx-8  w-auto h-fit bg-gray-100 rounded-md border border-gray-200 ">
+              <label
+                className=" flex  text-md font-semibold text-gray-700 cursor-pointer "
+                htmlFor="contained-button-file"
+              >
+                Upload your favourite audio files
+                <UploadCloud className="text-gray-900 mx-9 cursor-pointer" />
+                <input
+                  className="block w-full text-sm border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                  type="file"
+                  onChange={handleAudioFile}
+                  style={{ display: 'none' }}
+                  accept=".mp3,audio/*"
+                  id="contained-button-file"
+                />
+              </label>
+              <button
+                type="button"
+                className="px-2 py-2 text-white rounded-md bg-gradient-to-t from-indigo-600 to-indigo-400 "
+              >
+                Upload on Playlist
+              </button>
+            </div>
+
+            <PlayList />
           </div>
-          <PlayList />
+
+          <RightSectionLayout>
+            <section className="">
+              {audioFile ? (
+                <Player
+                  audioSrc={audioFile}
+                  currentPlayingTime={currentDuration}
+                />
+              ) : null}
+            </section>
+          </RightSectionLayout>
         </section>
-        <RightSectionLayout>
-          <section className="flex">
-            {audioFile ? (
-              <Player
-                audioSrc={audioFile}
-                currentPlayingTime={currentDuration}
-              />
-            ) : null}
-          </section>
-        </RightSectionLayout>
       </LeftSectionLayout>
     </MainLayout>
   );
