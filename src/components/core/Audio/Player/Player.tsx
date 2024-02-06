@@ -130,8 +130,7 @@ function Player({
           alt="idk - Highvyn, Taylor Shin"
           className="w-64 h-64 mx-auto rounded-lg mb-4 shadow-lg shadow-black"
         />
-        <h2 className="text-xl font-semibold text-center">song name</h2>
-        <p className="text-white text-sm text-center">song</p>
+        <h2 className="text-xl font-semibold text-center">song</h2>
         <audio ref={audioRef} src={audioSrc} />
 
         <div className="mt-6 flex justify-center items-center">
