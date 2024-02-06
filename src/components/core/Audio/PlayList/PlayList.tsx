@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -6,69 +7,67 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useRef } from 'react';
-// import { List } from 'react-feather';
 import { IoPause, IoPlay } from 'react-icons/io5';
-import { Lists } from '../../../../data/List';
+import { PlaylistData } from '../../../../data/List';
 
-function PlayList() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [data, setData]=useState()
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(false);
+interface PlaylistProps {
+  handlePlayPause: (audioSrc: string, index: number) => void;
+  isPlaying?: boolean;
+  playListInfo: PlaylistData[];
+  currentSongsIndex?: number;
+}
 
-  const handlePlay = () => {
-    if (currentTime) {
-      audioRef.current.currentTime = currentTime;
-    }
-    audioRef.current?.play();
-    setIsPlaying(true);
-  };
-  const handlePause = () => {
-    audioRef.current?.pause();
-    setIsPlaying(false);
-  };
-  const audioRef = useRef<any>(null);
-  const handlePlayPause = () => {
-    if (isPlaying) {
-      handlePause();
-    } else {
-      handlePlay();
-    }
-  };
+function PlayList({
+  handlePlayPause,
+  isPlaying,
+  currentSongsIndex,
+  playListInfo,
+}: PlaylistProps) {
+  // console.log('PlayList', playListInfo);
 
   return (
-    <main className="w-auto grid grid-cols-1 p-1 my-9 mx-9 rounded-md bg-gradient-to-t from-indigo-700 to-indigo-300 shadow-inner shadow-black  ">
+    <main className="w-auto grid grid-cols-1 p-3 my-9 mx-9 rounded-md bg-gradient-to-t from-indigo-700 to-indigo-200 shadow-inner shadow-black  ">
       <div className="">
-        {Lists?.map((item, id) => {
-          return (
-            <div
-              key={id}
-              className="flex m-9 p-6 justify-between border rounded-md items-center"
-            >
-              <img
-                src={item.img}
-                alt="pic"
-                width={40}
-                className="rounded-full "
-              />
-              <h1>{item.name}</h1>
-              {isPlaying ? (
-                <IoPause
-                  size={56}
-                  id="1"
-                  className="p-4 mx-2 bg-gray-200 rounded-full hover:bg-gray-300 "
-                  onClick={handlePlayPause}
+        <h1 className="font-bold  text-3xl text-white">
+          Your favourite playlist
+        </h1>
+        {playListInfo &&
+          playListInfo?.length &&
+          playListInfo?.map((item, index) => {
+            return (
+              <div
+                key={item.audioSrc}
+                className="flex m-4 p-2 justify-between border rounded-md items-center shadow-[0_3px_10px_rgb(0,0,0,0.2)] transform transition duration-500 hover:scale-105"
+              >
+                <img
+                  src={item.img}
+                  alt="pic"
+                  width={28}
+                  className="rounded-full "
                 />
-              ) : (
-                <IoPlay
-                  size={56}
-                  className="p-4 mx-2 bg-gray-200 rounded-full hover:bg-gray-300 "
-                  onClick={handlePlayPause}
-                />
-              )}
-            </div>
-          );
-        })}
+                <h1 className="overflow-hidden truncate w-40">{item.name}</h1>
+                <h1>{item.size}</h1>
+                {isPlaying && currentSongsIndex === index ? (
+                  <IoPause
+                    size={32}
+                    id="1"
+                    className="p-1 bg-gray-200 rounded-full hover:bg-gray-300 "
+                    onClick={() => {
+                      handlePlayPause(item?.audioSrc, index);
+                    }}
+                  />
+                ) : (
+                  <IoPlay
+                    size={32}
+                    className="p-1 bg-gray-200 rounded-full hover:bg-gray-300 "
+                    onClick={() => {
+                      handlePlayPause(item?.audioSrc, index);
+                    }}
+                  />
+                )}
+              </div>
+            );
+          })}
       </div>
     </main>
   );

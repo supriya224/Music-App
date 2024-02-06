@@ -13,19 +13,30 @@ import {
 function Player({
   audioSrc,
   currentPlayingTime = 0,
+  isPlayListPlayed = false,
+  isNextSongeExist = false,
+  currentSongsIndex = 0,
+  playNext,
+  playPrevious,
 }: {
   audioSrc: string;
   currentPlayingTime?: number;
+  isPlayListPlayed?: boolean;
+  isNextSongeExist?: boolean;
+  currentSongsIndex?: number;
+  playNext?: (index: number) => void;
+  playPrevious?: (index: number) => void;
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(currentPlayingTime);
+  const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
   const audioRef = useRef<any>(null);
 
   const handlePlay = () => {
-    if (currentTime) {
-      audioRef.current.currentTime = currentTime;
+    // console.log('currentPlayingTime', currentPlayingTime);
+    if (currentPlayingTime && !isPlayListPlayed) {
+      audioRef.current.currentTime = currentPlayingTime;
     }
     audioRef.current?.play();
     setIsPlaying(true);
@@ -49,18 +60,27 @@ function Player({
     );
     setIsPlaying(false);
   };
+  const handlePauseBtn = () => {
+    handlePause();
+  };
 
   const handlePlayPause = () => {
-    if (isPlaying) {
-      handlePause();
-    } else {
-      handlePlay();
-    }
+    handlePlay();
   };
 
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
     setDuration(audioRef.current.duration);
+
+    if (
+      audioRef.current.currentTime === audioRef.current.duration &&
+      isNextSongeExist
+    ) {
+      playNext?.(currentSongsIndex);
+    }
+    if (audioRef.current.currentTime === audioRef.current.duration) {
+      setIsPlaying(false);
+    }
   };
 
   const handleSeek = (e: any) => {
@@ -87,7 +107,13 @@ function Player({
     return () => {
       audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
     };
-  }, []);
+  }, [isNextSongeExist, currentSongsIndex]);
+
+  useEffect(() => {
+    if (isPlayListPlayed) {
+      handlePlayPause();
+    }
+  }, [isPlayListPlayed, audioSrc]);
 
   return (
     <div className="container mx-auto p-20 h-fit mt-9 ">
@@ -105,12 +131,15 @@ function Player({
           <IoPlaySkipBack
             size={36}
             className="p-2.5  bg-gray-200 rounded-full hover:bg-gray-300 "
+            onClick={() => {
+              playPrevious?.(currentSongsIndex);
+            }}
           />
           {isPlaying ? (
             <IoPause
               size={56}
               className="p-4 mx-2 bg-gray-200 rounded-full hover:bg-gray-300 "
-              onClick={handlePlayPause}
+              onClick={handlePauseBtn}
             />
           ) : (
             <IoPlay
@@ -122,16 +151,18 @@ function Player({
           <IoPlaySkipForward
             size={36}
             className="p-2.5 bg-gray-200 rounded-full hover:bg-gray-300 "
+            onClick={() => {
+              playNext?.(currentSongsIndex);
+            }}
           />
         </div>
         <input
-          id="default-range"
           type="range"
           min="0"
-          max={duration}
-          value={currentTime}
+          max={Math.floor(duration)}
+          value={Math.floor(currentTime)}
           onChange={handleSeek}
-          className="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer range pr-6 accent-indigo-800"
+          className="w-full h-2 bg-gray-200 rounded-lg  cursor-pointer range  accent-indigo-800"
         />
         <div className="flex justify-between mt-2 text-sm text-white">
           <span>{formatDuration(currentTime)}</span>
