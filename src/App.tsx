@@ -11,7 +11,7 @@ function App() {
         <Header />
         <Routes>
           {/* home router */}
-          <Route path="/" element={<Home />} />
+          <Route path="/music-app" element={<Home />} />
         </Routes>
         {/* footer */}
         <Footer />

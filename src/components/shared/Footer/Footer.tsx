@@ -9,7 +9,7 @@ function Footer() {
     // <!-- component -->
     <>
       {/* <div className="flex items-end w-full min-h-screen bg-white" /> */}
-      <footer className="container mx-auto text-gray-700  body-font bottom-0 shadow-lg shadow-indigo-200 my-2 rounded-xl">
+      <footer className="container mx-auto text-gray-700 body-font bottom-0 shadow-lg shadow-indigo-200 my-2 rounded-xl">
         <div className="container flex flex-col flex-wrap px-5 py-10 mx-auto md:items-center lg:items-start md:flex-row md:flex-no-wrap">
           <div className="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left">
             <a className="flex items-center justify-center font-medium text-gray-900 title-font md:justify-start">

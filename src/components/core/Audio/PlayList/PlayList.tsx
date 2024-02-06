@@ -39,7 +39,7 @@ function PlayList({
                 className="flex m-4 p-2 justify-between border rounded-md items-center shadow-[0_3px_10px_rgb(0,0,0,0.2)] transform transition duration-500 hover:scale-105"
               >
                 <img
-                  src={item.img}
+                  src="https://static.vecteezy.com/system/resources/thumbnails/010/063/543/small/music-festival-colorful-icon-with-notes-and-the-inscription-music-3d-render-png.png"
                   alt="pic"
                   width={28}
                   className="rounded-full "

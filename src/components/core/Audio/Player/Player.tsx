@@ -126,7 +126,7 @@ function Player({
     <div className="container mx-auto p-20 h-fit mt-9 ">
       <div className="bg-white p-12 rounded-lg  bg-gradient-to-t from-indigo-500 to-orange-300 shadow-lg shadow-black ">
         <img
-          src="./assets/images/bg.jpeg"
+          src="https://static.vecteezy.com/system/resources/thumbnails/010/063/543/small/music-festival-colorful-icon-with-notes-and-the-inscription-music-3d-render-png.png"
           alt="idk - Highvyn, Taylor Shin"
           className="w-64 h-64 mx-auto rounded-lg mb-4 shadow-lg shadow-black"
         />
