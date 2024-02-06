@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CONSTANT from './utils/constants/index';
-import { Footer, Header, SideBar } from './components';
+import { Footer, Header } from './components';
 import { Home } from './pages';
 
 function App() {
@@ -10,11 +10,13 @@ function App() {
   return (
     <div className="container mx-auto">
       <BrowserRouter>
+        {/* header */}
         <Header />
         <Routes>
+          {/* home router */}
           <Route path="/" element={<Home />} />
-          <Route path="/sidebar" element={<SideBar />} />
         </Routes>
+        {/* footer */}
         <Footer />
       </BrowserRouter>
     </div>

@@ -3,6 +3,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useRef, useState } from 'react';
+// import all icons
 import {
   IoPause,
   IoPlay,
@@ -10,6 +11,7 @@ import {
   IoPlaySkipForward,
 } from 'react-icons/io5';
 
+// player function and define its types
 function Player({
   audioSrc,
   currentPlayingTime = 0,
@@ -30,11 +32,11 @@ function Player({
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-
+  // audio ref
   const audioRef = useRef<any>(null);
 
+  // handle play function
   const handlePlay = () => {
-    // console.log('currentPlayingTime', currentPlayingTime);
     if (currentPlayingTime && !isPlayListPlayed) {
       audioRef.current.currentTime = currentPlayingTime;
     }
@@ -49,6 +51,7 @@ function Player({
     );
   };
 
+  // handle pause function
   const handlePause = () => {
     audioRef.current?.pause();
     localStorage.setItem(
@@ -60,14 +63,15 @@ function Player({
     );
     setIsPlaying(false);
   };
+  // handle playpause function
   const handlePauseBtn = () => {
     handlePause();
   };
-
+  // handle playpause function
   const handlePlayPause = () => {
     handlePlay();
   };
-
+  // time update function is here
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
     setDuration(audioRef.current.duration);
@@ -82,7 +86,7 @@ function Player({
       setIsPlaying(false);
     }
   };
-
+  // handleseek for currentaudio info and url
   const handleSeek = (e: any) => {
     audioRef.current.currentTime = e.target.value;
     setCurrentTime(e.target.value);
@@ -95,6 +99,7 @@ function Player({
     );
   };
 
+  // formate duration with help of math.floor
   function formatDuration(durationSeconds: number) {
     const minutes = Math.floor(durationSeconds / 60);
     const seconds = Math.floor(durationSeconds % 60);
@@ -102,6 +107,7 @@ function Player({
     return `${minutes}:${formattedSeconds}`;
   }
 
+  // use Effect hooks is here
   useEffect(() => {
     audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
     return () => {
@@ -109,9 +115,10 @@ function Player({
     };
   }, [isNextSongeExist, currentSongsIndex]);
 
+  // use Effect hooks is here
   useEffect(() => {
     if (isPlayListPlayed) {
-      handlePlayPause();
+      handlePlayPause(); // handle playpause button call here
     }
   }, [isPlayListPlayed, audioSrc]);
 

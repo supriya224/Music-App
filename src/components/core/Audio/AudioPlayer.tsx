@@ -5,6 +5,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Pause, Play } from 'react-feather';
 
+// audio player function
 function AudioPlayer({
   audioSrc,
   currentPlayingTime = 0,
@@ -17,7 +18,7 @@ function AudioPlayer({
   const [duration, setDuration] = useState(0);
 
   const audioRef = useRef<any>(null);
-
+  // handle play button
   const handlePlay = () => {
     if (currentTime) {
       audioRef.current.currentTime = currentTime;
@@ -32,7 +33,7 @@ function AudioPlayer({
       }),
     );
   };
-
+  // handle pause button
   const handlePause = () => {
     audioRef.current?.pause();
     localStorage.setItem(
@@ -44,7 +45,7 @@ function AudioPlayer({
     );
     setIsPlaying(false);
   };
-
+  //  handle play and pause
   const handlePlayPause = () => {
     if (isPlaying) {
       handlePause();
@@ -52,12 +53,12 @@ function AudioPlayer({
       handlePlay();
     }
   };
-
+  // handle time update
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
     setDuration(audioRef.current.duration);
   };
-
+  // handle seek funciton
   const handleSeek = (e: any) => {
     audioRef.current.currentTime = e.target.value;
     setCurrentTime(e.target.value);
@@ -69,7 +70,7 @@ function AudioPlayer({
       }),
     );
   };
-
+  // handle formate duration function
   function formatDuration(durationSeconds: number) {
     const minutes = Math.floor(durationSeconds / 60);
     const seconds = Math.floor(durationSeconds % 60);
@@ -77,6 +78,7 @@ function AudioPlayer({
     return `${minutes}:${formattedSeconds}`;
   }
 
+  // useEffect hooks
   useEffect(() => {
     audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
     return () => {
@@ -84,7 +86,7 @@ function AudioPlayer({
     };
   }, []);
 
-  console.log(currentTime);
+  // console.log(currentTime);
 
   return (
     <div className=" ">

@@ -2,13 +2,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { useEffect, useMemo, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
+import React, { useEffect, useState } from 'react';
 import * as idb from 'idb';
-// import { Heart } from 'react-feather';
 import { UploadCloud } from 'react-feather';
 import { MainLayout } from '../../layouts';
-// import { SideBar } from '../../components';
 import Player from '../../components/core/Audio/Player/Player';
 import PlayList from '../../components/core/Audio/PlayList/PlayList';
 import RightSectionLayout from '../../layouts/RightSectionLayout/RightSectionLayout';
@@ -17,7 +15,6 @@ import { PlaylistData } from '../../data/List';
 
 function formatBytes(bytes: number, decimals = 2) {
   if (!+bytes) return '0 Bytes';
-
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
   const sizes = [
@@ -31,13 +28,12 @@ function formatBytes(bytes: number, decimals = 2) {
     'ZiB',
     'YiB',
   ];
-
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-
   return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
 
 function Home() {
+  // all usestate hooks which is store initial value and change value
   const [audioFile, setAudioFile] = useState('');
   const [playViaPlayList, setPlayViaPlayList] = useState(false);
   const [currentSongsIndex, setCurrentSongsIndex] = useState(0);
@@ -45,9 +41,9 @@ function Home() {
   const [playListSongs, setPlayListSongs] = useState<PlaylistData[]>([]);
   const [audio, setAudio] = useState<any>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-
   const [currentDuration, setCurrentDuration] = useState(0);
 
+  // handle audio file here and asynchronus function
   const handleAudioFile = async (e: any) => {
     console.log('e', e.target.files[0]);
     const file = e.target.files[0];
@@ -64,6 +60,7 @@ function Home() {
     setAudioFile(URL.createObjectURL(file));
   };
 
+  // handle play list button here
   const handleAddPlaylist = () => {
     setPlayListSongs([
       ...playListSongs,
@@ -76,7 +73,9 @@ function Home() {
     ]);
   };
 
+  // use effect hooks
   useEffect(() => {
+    // I used IndexDb for storing data in browser
     let db: idb.IDBPDatabase<unknown>;
     const initializeDatabase = async () => {
       // Open a connection to the 'audioDB' database with a version of 1
@@ -97,10 +96,10 @@ function Home() {
       }
     };
 
+    // audio info store in local storage and get data from it
     const audioInfo = localStorage.getItem('currentAudioInfo');
     if (audioInfo) {
       const actualAudioInfo = JSON.parse(audioInfo);
-
       setCurrentDuration(actualAudioInfo?.previousDuration);
     }
     initializeDatabase();
@@ -113,7 +112,7 @@ function Home() {
       }
     };
   }, []);
-
+  // play next song button function is here
   const PlayNext = (index: number) => {
     const isNextSongsExist = index + 1 === playListSongs.length;
     if (!isNextSongsExist) {
@@ -122,6 +121,7 @@ function Home() {
       setCurrentSongsIndex(index + 1 || 0);
     }
   };
+  // play previous song button function is here
   const playPrevious = (index: number) => {
     if (index) {
       const nextSongsAudioFile = playListSongs[index - 1];
@@ -131,14 +131,19 @@ function Home() {
     }
   };
 
+  // handle play pause button here function
   const handlePlayPause = (audioSrc: string, index: number) => {
     const isNextSongsExist = index + 1 === playListSongs.length;
     if (!isNextSongsExist) {
+      // next song is exists then it will be run
       setIsNextSongExist(true);
     } else {
+      // next song is exists then it will be error
       setIsNextSongExist(false);
     }
+    // audiosrc
     setAudioFile(audioSrc);
+    // play song via playlist where data will be dynamic
     setPlayViaPlayList(true);
     setCurrentSongsIndex(index);
     setIsPlaying(true);
@@ -167,7 +172,7 @@ function Home() {
                   id="contained-button-file"
                 />
               </label>
-              {/*  */}
+              {/* add to playlist */}
               {audio ? (
                 <button
                   type="button"
@@ -178,7 +183,7 @@ function Home() {
                 </button>
               ) : null}
             </div>
-
+            {/* Playlist import */}
             <PlayList
               playListInfo={playListSongs}
               handlePlayPause={handlePlayPause}
@@ -186,7 +191,7 @@ function Home() {
               currentSongsIndex={currentSongsIndex}
             />
           </div>
-
+          {/* rigth side section wehere song will be play */}
           <RightSectionLayout>
             <section className="">
               {audioFile ? (
@@ -202,6 +207,7 @@ function Home() {
               ) : null}
             </section>
           </RightSectionLayout>
+          {/* right section end */}
         </section>
       </LeftSectionLayout>
       {/* left section end */}

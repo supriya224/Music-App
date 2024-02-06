@@ -10,21 +10,20 @@ import React, { useState, useRef } from 'react';
 import { IoPause, IoPlay } from 'react-icons/io5';
 import { PlaylistData } from '../../../../data/List';
 
+// interface of playlist
 interface PlaylistProps {
   handlePlayPause: (audioSrc: string, index: number) => void;
   isPlaying?: boolean;
   playListInfo: PlaylistData[];
   currentSongsIndex?: number;
 }
-
+// paasing some params
 function PlayList({
   handlePlayPause,
   isPlaying,
   currentSongsIndex,
   playListInfo,
 }: PlaylistProps) {
-  // console.log('PlayList', playListInfo);
-
   return (
     <main className="w-auto grid grid-cols-1 p-3 my-9 mx-9 rounded-md bg-gradient-to-t from-indigo-700 to-indigo-200 shadow-inner shadow-black  ">
       <div className="">
